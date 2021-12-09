@@ -1,0 +1,35 @@
+{
+  "name": "noweh/project-marvel-memories",
+  "description": "Fanmade project using Twitter API and Marvel API.",
+  "keywords": [
+    "twitter",
+    "PHP",
+    "API"
+  ],
+  "type": "library",
+  "require": {
+    "ext-curl": "*",
+    "ext-json": "*",
+    "php": ">=8.1",
+    "guzzlehttp/guzzle": "^7.4",
+    "vlucas/phpdotenv": "^5.3",
+    "noweh/twitter-api-v2-php": "^2.0"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.2.0"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Julien Schmitt",
+      "email": "jschmitt95@protonmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Noweh\\MarvelMemories\\": "project/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
