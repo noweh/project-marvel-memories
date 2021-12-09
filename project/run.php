@@ -7,7 +7,9 @@ use Noweh\TwitterApi\Client as TwitterClient;
 use Noweh\MarvelMemories\MarvelService;
 
 // Only allowed for cli
-PHP_SAPI === 'cli' or die('not allowed');
+if (PHP_SAPI !== 'cli') {
+    die('Not allowed');
+}
 
 $start = microtime(true);
 

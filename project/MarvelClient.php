@@ -25,11 +25,11 @@ class MarvelClient
      * Perform the request to Marvel API
      * @param string $method
      * @param string $uri
-     * @param array<string> $searchParams
-     * @return mixed
+     * @param array<string, int|string> $searchParams
+     * @return array<int, \stdClass>
      * @throws \JsonException|\RuntimeException
      */
-    public function performRequest(string $method, string $uri, array $searchParams = []): mixed
+    public function performRequest(string $method, string $uri, array $searchParams = []): array
     {
         try {
             $timestamp = time();
@@ -46,12 +46,9 @@ class MarvelClient
 
             $body = json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
 
-            if ($response->getStatusCode() >= 400) {
+            if (!$body instanceof \stdClass || $response->getStatusCode() >= 400) {
                 $error = new \stdClass();
                 $error->message = 'cURL error';
-                if ($body) {
-                    $error->details = $response;
-                }
                 throw new \RuntimeException(
                     json_encode($error, JSON_THROW_ON_ERROR),
                     $response->getStatusCode()
@@ -60,7 +57,7 @@ class MarvelClient
 
             return $body->data->results;
         } catch (ClientException | ServerException | GuzzleException $e) {
-            throw new \RuntimeException(json_encode($e->getResponse()->getBody()->getContents(), JSON_THROW_ON_ERROR));
+            throw new \RuntimeException(json_encode($e->getMessage(), JSON_THROW_ON_ERROR));
         }
     }
 }

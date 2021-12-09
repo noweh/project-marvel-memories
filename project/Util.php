@@ -11,11 +11,11 @@ class Util
 {
     /**
      * Transforms an url in tinyUrl to take up less space in a Tweet
-     * @param $url
+     * @param string $url
      * @return string
      * @throws \JsonException
      */
-    public static function getTinyUrl($url): string
+    public static function getTinyUrl(string $url): string
     {
         try {
             $client = new Client();
@@ -32,7 +32,7 @@ class Util
 
             return $response->getBody()->getContents();
         } catch (ClientException | ServerException | GuzzleException $e) {
-            throw new \RuntimeException(json_encode($e->getResponse()->getBody()->getContents(), JSON_THROW_ON_ERROR));
+            throw new \RuntimeException(json_encode($e->getMessage(), JSON_THROW_ON_ERROR));
         }
     }
 }

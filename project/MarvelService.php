@@ -39,6 +39,8 @@ class MarvelService
             }
         }
 
+        $text .= "\r\n#marvel #comics";
+
         return $text;
     }
 
@@ -49,18 +51,19 @@ class MarvelService
      */
     public function findRandomComic(): \stdClass
     {
-        $referenceDate = new \DateTime(random_int(1960, date('Y')) . '-' . random_int(1, 12) . '-01');
+        $referenceDate = new \DateTime(random_int(1960, (int) date('Y')) . '-' . random_int(1, 12) . '-01');
         $firstDay = $referenceDate->format('Y-m-d');
         $lastDay = $referenceDate->modify('last day of this month')->format('Y-m-d');
 
         $return = (new MarvelClient($this->private_key, $this->public_key))
             ->performRequest('GET', 'comics', [
-                'limit' => 100,
+                'limit' => 1,
                 'format' => 'comic',
                 'formatType' => 'comic',
                 'dateRange' => $firstDay . ',' . $lastDay
             ])
         ;
+
         // Take a random item among 100
         shuffle($return);
         $randomComicData = $return[0];
