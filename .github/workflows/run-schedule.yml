@@ -2,7 +2,7 @@ name: "Scheduler"
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/10 * * * *"
 
 jobs:
   tweet:
