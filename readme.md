@@ -5,7 +5,7 @@
 [![Badge Twitter](https://img.shields.io/endpoint?url=https%3A%2F%2Ftwbadges.glitch.me%2Fbadges%2Fv2)](https://developer.twitter.com/en/docs/twitter-api)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](licence.md)
 
-A fanmade project in PHP using [API Twitter V2](https://github.com/noweh/twitter-api-v2-php), Marvel API and Github action scheduler.
+A fanmade project in PHP using [API Twitter V2](https://github.com/noweh/twitter-api-v2-php), [Marvel API](https://developer.marvel.com/) and [Github action scheduler](https://github.com/marketplace/actions/schedule-job-action).
 
 ## What about?
 
