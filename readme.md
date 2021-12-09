@@ -13,6 +13,8 @@ Posts a random cover with details about Marvel comics history to a Twitter accou
 
 ### Example:
 
-<a href="https://twitter.com/SteveBOTgers/status/1468969530781175816">
-    <img alt="Tweet example" width="200px" src="https://raw.githubusercontent.com/noweh/project-marvel-memories/master/assets/tweet-example.png" />
-</a>
+<div>
+    <a href="https://twitter.com/SteveBOTgers/status/1468969530781175816">
+        <img alt="Tweet example" width="500px" src="https://raw.githubusercontent.com/noweh/project-marvel-memories/master/assets/tweet-example.png" />
+    </a>
+</div>
