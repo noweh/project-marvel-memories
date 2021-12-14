@@ -4,6 +4,8 @@ namespace Noweh\MarvelMemories;
 
 class MarvelService
 {
+    private DBAdapter $myDB;
+
     /**
      * Constructor
      * @param string $private_key
@@ -12,7 +14,9 @@ class MarvelService
     public function __construct(
         public readonly string $private_key,
         public readonly string $public_key
-    ) {}
+    ) {
+        $this->myDB = new DBAdapter(__DIR__ . '//database//db.sqlite');
+    }
 
     /**
      * Find a random comic from 1960 to now,
@@ -22,7 +26,13 @@ class MarvelService
      */
     public function findRandomComicFormattedForTweet(): string
     {
-        $comicDetails = $this->findRandomComic();
+        // Search for a comic that does not already exist in DB / already Tweeted
+        do {
+            $comicDetails = $this->findRandomComic();
+        } while ($this->myDB->searchCoverId($comicDetails->id));
+
+        // Add the comic ID in DB
+        $this->myDB->addCoverId($comicDetails->id);
 
         $text = "[COVER] Marvel Comics presents $comicDetails->title.\r\n" .
         "Sale dated from $comicDetails->saleDate ($comicDetails->url).\r\n";
@@ -66,9 +76,11 @@ class MarvelService
 
         // Take a random item among 100
         shuffle($return);
+
         $randomComicData = $return[0];
 
         $comicDetails = new \stdClass();
+        $comicDetails->id = $randomComicData->id;
         $comicDetails->title = $randomComicData->title;
 
         $comicDetails->saleDate = null;

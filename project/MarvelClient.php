@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
+use RuntimeException;
 
 class MarvelClient
 {
@@ -49,7 +50,7 @@ class MarvelClient
             if (!$body instanceof \stdClass || $response->getStatusCode() >= 400) {
                 $error = new \stdClass();
                 $error->message = 'cURL error';
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     json_encode($error, JSON_THROW_ON_ERROR),
                     $response->getStatusCode()
                 );
@@ -57,7 +58,7 @@ class MarvelClient
 
             return $body->data->results;
         } catch (ClientException | ServerException | GuzzleException $e) {
-            throw new \RuntimeException(json_encode($e->getMessage(), JSON_THROW_ON_ERROR));
+            throw new RuntimeException(json_encode($e->getMessage(), JSON_THROW_ON_ERROR));
         }
     }
 }

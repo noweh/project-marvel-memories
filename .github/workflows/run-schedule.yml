@@ -51,3 +51,12 @@ jobs:
           TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
           TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
         run: php project/run.php
+
+      - name: Commit and push db.sqlite update
+        run: |
+          git config user.name "Julien SCHMITT"
+          git config user.email "jschmitt95@protonmail.com"
+          git add -A
+          timestamp=$(date -u)
+          git commit -m "Last Commit: ${timestamp}(TW)" || exit 0
+          git push origin master

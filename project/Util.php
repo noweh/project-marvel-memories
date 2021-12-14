@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
+use JsonException;
 
 class Util
 {
@@ -13,7 +14,7 @@ class Util
      * Transforms an url in tinyUrl to take up less space in a Tweet
      * @param string $url
      * @return string
-     * @throws \JsonException
+     * @throws JsonException
      */
     public static function getTinyUrl(string $url): string
     {
