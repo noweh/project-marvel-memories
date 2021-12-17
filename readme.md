@@ -4,7 +4,7 @@
 ![SQLite](https://img.shields.io/static/v1?style=flat-square&message=SQLite&color=003B57&logo=SQLite&logoColor=FFFFFF&label=)
 [![Marvel](https://img.shields.io/badge/Marvel%20API-828cb7.svg?color=FF2D20)](https://developer.marvel.com/)
 [![Badge Twitter](https://img.shields.io/badge/Twitter%20API-v2-828cb7.svg?style=flat-square&logo=twitter&color=1DA1F2)](https://developer.twitter.com/en/docs/twitter-api)
-[![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](licence.md)
+[![MIT Licensed](https://img.shields.io/github/license/noweh/project-marvel-memories)](licence.md)
 
 A fanmade project in PHP using [API Twitter V2](https://github.com/noweh/twitter-api-v2-php), [Marvel API](https://developer.marvel.com/) and [Github action scheduler](https://github.com/marketplace/actions/schedule-job-action).
 
