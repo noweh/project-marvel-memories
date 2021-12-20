@@ -67,7 +67,7 @@ class MarvelService
 
         $return = (new MarvelClient($this->private_key, $this->public_key))
             ->performRequest('GET', 'comics', [
-                'limit' => 1,
+                'limit' => 100,
                 'format' => 'comic',
                 'formatType' => 'comic',
                 'dateRange' => $firstDay . ',' . $lastDay
