@@ -29,7 +29,7 @@ class MarvelService
         // Search for a comic that does not already exist in DB / already Tweeted
         do {
             $comicDetails = $this->findRandomComic();
-        } while ($this->myDB->searchCoverId($comicDetails->id));
+        } while (!(array)$comicDetails || $this->myDB->searchCoverId($comicDetails->id));
 
         // Add the comic ID in DB
         $this->myDB->addCoverId($comicDetails->id);
@@ -74,37 +74,40 @@ class MarvelService
             ])
         ;
 
-        // Take a random item among 100
-        shuffle($return);
-
-        $randomComicData = $return[0];
-
         $comicDetails = new \stdClass();
-        $comicDetails->id = $randomComicData->id;
-        $comicDetails->title = $randomComicData->title;
 
-        $comicDetails->saleDate = null;
-        foreach ($randomComicData->dates as $dateData) {
-            if ($dateData->type === 'onsaleDate') {
-                $comicDetails->saleDate = (new \DateTime($dateData->date))->format('F Y');
+        if ($return) {
+            // Take a random item among 100
+            shuffle($return);
+
+            $randomComicData = $return[0];
+
+            $comicDetails->id = $randomComicData->id;
+            $comicDetails->title = $randomComicData->title;
+
+            $comicDetails->saleDate = null;
+            foreach ($randomComicData->dates as $dateData) {
+                if ($dateData->type === 'onsaleDate') {
+                    $comicDetails->saleDate = (new \DateTime($dateData->date))->format('F Y');
+                }
             }
-        }
 
-        $comicDetails->image = null;
-        if ($randomComicData->thumbnail) {
-            $comicDetails->image = Util::getTinyUrl($randomComicData->thumbnail->path . '.' . $randomComicData->thumbnail->extension);
-        }
-
-        $comicDetails->url = null;
-        foreach ($randomComicData->urls as $url) {
-            if ($url->type === 'detail') {
-                $comicDetails->url = Util::getTinyUrl($url->url);
+            $comicDetails->image = null;
+            if ($randomComicData->thumbnail) {
+                $comicDetails->image = Util::getTinyUrl($randomComicData->thumbnail->path . '.' . $randomComicData->thumbnail->extension);
             }
-        }
 
-        $comicDetails->creators = [];
-        foreach ($randomComicData->creators->items as $creator) {
-            $comicDetails->creators[ucfirst($creator->role)] = $creator->name;
+            $comicDetails->url = null;
+            foreach ($randomComicData->urls as $url) {
+                if ($url->type === 'detail') {
+                    $comicDetails->url = Util::getTinyUrl($url->url);
+                }
+            }
+
+            $comicDetails->creators = [];
+            foreach ($randomComicData->creators->items as $creator) {
+                $comicDetails->creators[ucfirst($creator->role)] = $creator->name;
+            }
         }
 
         return $comicDetails;
