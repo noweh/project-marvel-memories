@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Psr7\Response;
 use JsonException;
 
 class Util
@@ -18,22 +19,28 @@ class Util
      */
     public static function getTinyUrl(string $url): string
     {
+        $response = self::executeRequest($url);
+        self::validate($response);
+        return $response->getBody()->getContents();
+    }
+
+    private static function executeRequest(string $url): Response
+    {
         try {
             $client = new Client();
-            $response = $client->get('https://tinyurl.com/api-create.php?url=' . $url);
-
-            if ($response->getStatusCode() >= 400) {
-                $error = new \stdClass();
-                $error->message = 'cURL error with tinyurl call';
-                throw new \RuntimeException(
-                    json_encode($error, JSON_THROW_ON_ERROR),
-                    $response->getStatusCode()
-                );
-            }
-
-            return $response->getBody()->getContents();
+            return $client->get('https://tinyurl.com/api-create.php?url=' . $url);
         } catch (ClientException | ServerException | GuzzleException $e) {
             throw new \RuntimeException(json_encode($e->getMessage(), JSON_THROW_ON_ERROR));
+        }
+    }
+
+    private static function validate(Response $response): void
+    {
+        if ($response->getStatusCode() >= 400) {
+            throw new \RuntimeException(
+                json_encode(['message' => 'cURL error with tinyurl call'], JSON_THROW_ON_ERROR),
+                $response->getStatusCode()
+            );
         }
     }
 }
