@@ -10,6 +10,8 @@ use JsonException;
 
 class Util
 {
+    const TINYURL = 'https://tinyurl.com/api-create.php';
+
     /**
      * Transforms an url in tinyUrl to take up less space in a Tweet
      * @param string $url
@@ -20,7 +22,7 @@ class Util
     {
         try {
             $client = new Client();
-            $response = $client->get('https://tinyurl.com/api-create.php?url=' . $url);
+            $response = $client->get(Util::TINYURL . "?url=$url");
 
             if ($response->getStatusCode() >= 400) {
                 $error = new \stdClass();
