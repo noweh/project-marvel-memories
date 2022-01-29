@@ -7,6 +7,7 @@ class MarvelService
     /**
      * Constructor
      * @param DBAdapter $dbAdapter
+     * @param MarvelClient $marvelClient
      */
     public function __construct(
         private readonly DBAdapter $dbAdapter,
