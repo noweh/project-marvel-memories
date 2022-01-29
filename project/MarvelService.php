@@ -6,7 +6,7 @@ class MarvelService
 {
     /**
      * Constructor
-     * @param DBAdapter $myDB
+     * @param DBAdapter $dbAdapter
      */
     public function __construct(
         private readonly DBAdapter $dbAdapter,
@@ -24,10 +24,10 @@ class MarvelService
         // Search for a comic that does not already exist in DB / already Tweeted
         do {
             $comicDetails = $this->findRandomComic();
-        } while (!(array)$comicDetails || $this->myDB->searchCoverId($comicDetails->id));
+        } while (!(array)$comicDetails || $this->dbAdapter->searchCoverId($comicDetails->id));
 
         // Add the comic ID in DB
-        $this->myDB->addCoverId($comicDetails->id);
+        $this->dbAdapter->addCoverId($comicDetails->id);
 
         $text = "[COVER] Marvel Comics presents $comicDetails->title.\r\n" .
         "Sale dated from $comicDetails->saleDate ($comicDetails->url).\r\n";
