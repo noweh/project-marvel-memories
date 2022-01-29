@@ -9,3 +9,4 @@ vendor/
 *.retry
 .vscode/
 .phpunit.result.cache
+tags
