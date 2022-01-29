@@ -4,19 +4,14 @@ namespace Noweh\MarvelMemories;
 
 class MarvelService
 {
-    private DBAdapter $myDB;
-
     /**
      * Constructor
-     * @param string $private_key
-     * @param string $public_key
+     * @param DBAdapter $myDB
      */
     public function __construct(
-        public readonly string $private_key,
-        public readonly string $public_key
-    ) {
-        $this->myDB = new DBAdapter(__DIR__ . '//database//db.sqlite');
-    }
+        private readonly DBAdapter $dbAdapter,
+        private readonly MarvelClient $marvelClient
+    ) {}
 
     /**
      * Find a random comic from 1960 to now,
@@ -65,14 +60,16 @@ class MarvelService
         $firstDay = $referenceDate->format('Y-m-d');
         $lastDay = $referenceDate->modify('last day of this month')->format('Y-m-d');
 
-        $return = (new MarvelClient($this->private_key, $this->public_key))
-            ->performRequest('GET', 'comics', [
+        $return = $this->marvelClient->performRequest(
+            'GET',
+            'comics',
+            [
                 'limit' => 100,
                 'format' => 'comic',
                 'formatType' => 'comic',
                 'dateRange' => $firstDay . ',' . $lastDay
-            ])
-        ;
+            ]
+        );
 
         $comicDetails = new \stdClass();
 
