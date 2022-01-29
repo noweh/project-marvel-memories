@@ -11,6 +11,7 @@ class MarvelServiceTest extends TestCase
 {
     public function testFindRandomComic(): void
     {
+        // Given
         $comicData = new \stdClass;
         $comicData->id = 123;
         $comicData->title = 'test title';
@@ -24,15 +25,18 @@ class MarvelServiceTest extends TestCase
         $comicData->dates = [
             $comicDataDate
         ];
-
         $dbAdapterMock = $this->createMock(DBAdapter::class);
         $marvelClientMock = $this->createMock(MarvelClient::class);
         $marvelClientMock->expects($this->once())
             ->method('performRequest')
             ->with('GET', 'comics', $this->anything())
             ->willReturn([$comicData]);
+
+        // WHen
         $service = new MarvelService($dbAdapterMock, $marvelClientMock);
         $result = $service->findRandomComic();
+
+        // Then
         $this->assertInstanceOf(\stdClass::class, $result);
         $this->assertEquals($comicData->id, $result->id);
     }
