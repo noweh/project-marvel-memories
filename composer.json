@@ -30,6 +30,7 @@
   "autoload": {
     "psr-4": {
       "Noweh\\MarvelMemories\\": "project/"
+      "Test": "tests"
     }
   },
   "minimum-stability": "dev",
