@@ -5,6 +5,8 @@ require __DIR__ . '/../vendor/autoload.php';
 use Dotenv\Dotenv;
 use Noweh\TwitterApi\Client as TwitterClient;
 use Noweh\MarvelMemories\MarvelService;
+use Noweh\MarvelMemories\MarvelClient;
+use Noweh\MarvelMemories\DBAdapter;
 
 // Only allowed for cli
 if (PHP_SAPI !== 'cli') {
@@ -29,10 +31,12 @@ try {
             $twitterSettings[str_replace('twitter_', '', mb_strtolower($settingKey))] = $settingValue;
         }
     }
-
+    
+    $dbAdapter = new DBAdapter(__DIR__ . '//database//db.sqlite');
+    $marvelClient = new MarvelClient($marvelSettings['private_key'], $marvelSettings['public_key']);
     // Tweet a random comic details
     $return = (new TwitterClient($twitterSettings))->tweet()->performRequest('POST', [
-        'text' => (new MarvelService($marvelSettings['private_key'], $marvelSettings['public_key']))
+        'text' => (new MarvelService($dbAdapter, $marvelClient))
             ->findRandomComicFormattedForTweet()
     ]);
 
