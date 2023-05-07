@@ -35,7 +35,7 @@ try {
     $dbAdapter = new DBAdapter(__DIR__ . '//database//db.sqlite');
     $marvelClient = new MarvelClient($marvelSettings['private_key'], $marvelSettings['public_key']);
     // Tweet a random comic details
-    $return = (new TwitterClient($twitterSettings))->tweet()->performRequest('POST', [
+    $return = (new TwitterClient($twitterSettings))->tweet()->create()->performRequest([
         'text' => (new MarvelService($dbAdapter, $marvelClient))
             ->findRandomComicFormattedForTweet()
     ]);

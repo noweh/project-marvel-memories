@@ -14,7 +14,7 @@
     "php": ">=8.1",
     "guzzlehttp/guzzle": "^7.4",
     "vlucas/phpdotenv": "^5.3",
-    "noweh/twitter-api-v2-php": "^2.0"
+    "noweh/twitter-api-v2-php": "^3.0"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.2.0",
